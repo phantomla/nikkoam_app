@@ -1,30 +1,15 @@
-import React, {useRef} from 'react';
+import React from 'react';
+
+import Body from './body';
+import Header from './header';
 
 export const HomePage: React.FC = () => {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const aRef = useRef(null);
-
   return (
-    <React.Fragment>
-      <input
-        onFocus={() => {
-          console.log('123');
-        }}
-        ref={inputRef}
-      />
-      <br />
-      <div>sads</div>
-      {/* {performance.now()} */}
-      <br />
-      <button
-        onClick={() => {
-          clearTimeout(aRef.current);
-        }}
-      >
-        Stop
-      </button>
-    </React.Fragment>
+    <>
+      <Header />
+      <Body />
+    </>
   );
 };
 
-export default HomePage;
+export default React.memo(HomePage);
