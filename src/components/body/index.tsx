@@ -1,5 +1,6 @@
 import useDeviceDetector from 'components/hook/detext';
-import React, {useCallback, useMemo, useState} from 'react';
+import gsap, {Sine, TweenLite, TweenMax} from 'gsap';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {
   BodyWrap,
@@ -25,11 +26,13 @@ import {
   TdInfo,
   TdInfoEnd,
   TitleCompOne,
+  Wave,
 } from './styles';
 
 export const BodyComponent: React.FC = () => {
   const [active, setActive] = useState(1);
-  const {isSp} = useDeviceDetector();
+  const {isSp, height} = useDeviceDetector();
+  const svgRef = useRef();
 
   const openLink = useCallback(() => {
     open('https://google.com.vn');
@@ -51,11 +54,54 @@ export const BodyComponent: React.FC = () => {
         };
   }, [isSp]);
 
+  const svg: any = svgRef.current;
+  const width = 800;
+
+  useEffect(() => {
+    if (!gsap || !svg) return;
+
+    const waves = svg.querySelectorAll(`polyline`);
+
+    (TweenLite as any).defaultEase = Sine.easeInOut;
+    TweenLite.set('g', {x: height / 2});
+
+    const amplitude = 200;
+    const frequency = 2;
+    const segments = 200;
+    const interval = width / segments;
+
+    for (let i = 0; i < segments; i++) {
+      const norm = i / (segments - 1);
+      waves.forEach((wave: any, index: number) => {
+        const point = wave.points.appendItem(svg.createSVGPoint());
+
+        point.y = i * interval;
+        point.x = amplitude / 2;
+
+        TweenMax.to(point, 2, {
+          x: Number(-point.x) + (index + 1) * 15,
+          y: Number(-point.y) + (index + 1) * 15,
+          repeat: -1,
+          yoyo: true,
+        }).progress(norm * frequency);
+      });
+    }
+    // gsap.to('g', {duration: 2.5, ease: 'power3.out', y: -500});
+  }, [svg]);
+
   return (
     <BodyWrap>
       <ComponentOne>
         <ComponentLeft>
-          <img src="/images/wave.svg" height={950} />
+          {/* <img src="/images/wave.svg" height={950} /> */}
+          <Wave ref={svgRef}>
+            <g>
+              <line id="line" x1="0" x2="100%" />
+              {[...Array(10)].map((_, index: number) => {
+                return <polyline className={`wave_${index}`} />;
+              })}
+            </g>
+          </Wave>
         </ComponentLeft>
         <ComponentRight>
           <TitleCompOne>

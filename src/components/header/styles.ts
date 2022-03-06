@@ -81,7 +81,12 @@ export const MenuItem = styled.div`
   color: #1a1a1a;
   cursor: pointer;
   transition: all 0.25s;
-
+  &:hover {
+    transform: scale(1.1);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
   @media only screen and (max-width: 768px) {
     /* For mobile phones: */
     padding: 10px;
@@ -101,6 +106,12 @@ export const MenuItemCountry = styled.div`
   color: #1a1a1a;
   cursor: pointer;
   transition: all 0.25s;
+  &:hover {
+    transform: scale(1.1);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
   @media only screen and (max-width: 768px) {
     /* For mobile phones: */
     padding: 10px;

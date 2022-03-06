@@ -348,6 +348,28 @@ export const SpanRight = styled.span`
   }
 `;
 
+export const Wave = styled.svg`
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  /* transform: rotate(90deg); */
+  line {
+    stroke-width: 1;
+    stroke: #3c3c3c;
+    display: none;
+  }
+  polyline {
+    fill: none;
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #00a4b8;
+  }
+  @media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+  }
+`;
+
 export default {
   BodyWrap,
   LinkCompOne,
