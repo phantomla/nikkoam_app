@@ -18,9 +18,7 @@ export default function Home() {
       </Head>
 
       {/* This is Home page */}
-      <body>
-        <HomePage />
-      </body>
+      <HomePage />
     </div>
   );
 }
