@@ -1,4 +1,4 @@
-import useDeviceDetector from 'components/hook/detext';
+import useDeviceDetector, {useWindowSize} from 'components/hook/detext';
 import gsap, {Sine, TweenLite, TweenMax} from 'gsap';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
@@ -31,7 +31,8 @@ import {
 
 export const BodyComponent: React.FC = () => {
   const [active, setActive] = useState(1);
-  const {isSp, height} = useDeviceDetector();
+  const {isSp} = useDeviceDetector();
+  const {scrollPosition} = useWindowSize();
   const svgRef = useRef();
 
   const openLink = useCallback(() => {
@@ -63,7 +64,7 @@ export const BodyComponent: React.FC = () => {
     const waves = svg.querySelectorAll(`polyline`);
 
     (TweenLite as any).defaultEase = Sine.easeInOut;
-    TweenLite.set('g', {x: height / 2});
+    TweenLite.set('g', {x: 2});
 
     const amplitude = 200;
     const frequency = 2;
@@ -79,8 +80,8 @@ export const BodyComponent: React.FC = () => {
         point.x = amplitude / 2;
 
         TweenMax.to(point, 2, {
-          x: Number(-point.x) + (index + 1) * 15,
-          y: Number(-point.y) + (index + 1) * 15,
+          x: Number(-point.x) + (index + 1) * 20,
+          y: Number(-point.y) + (index + 1) * 20,
           repeat: -1,
           yoyo: true,
         }).progress(norm * frequency);
@@ -97,7 +98,7 @@ export const BodyComponent: React.FC = () => {
           <Wave ref={svgRef}>
             <g>
               <line id="line" x1="0" x2="100%" />
-              {[...Array(10)].map((_, index: number) => {
+              {[...Array(30)].map((_, index: number) => {
                 return <polyline className={`wave_${index}`} />;
               })}
             </g>
