@@ -1,4 +1,4 @@
-import useDeviceDetector, {useWindowSize} from 'components/hook/detext';
+import useDeviceDetector from 'components/hook/detext';
 import gsap, {Sine, TweenLite, TweenMax} from 'gsap';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
@@ -32,7 +32,6 @@ import {
 export const BodyComponent: React.FC = () => {
   const [active, setActive] = useState(1);
   const {isSp} = useDeviceDetector();
-  const {scrollPosition} = useWindowSize();
   const svgRef = useRef();
 
   const openLink = useCallback(() => {
@@ -87,7 +86,6 @@ export const BodyComponent: React.FC = () => {
         }).progress(norm * frequency);
       });
     }
-    // gsap.to('g', {duration: 2.5, ease: 'power3.out', y: -500});
   }, [svg]);
 
   return (
