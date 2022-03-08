@@ -1,5 +1,7 @@
+import {gsap} from 'gsap/dist/gsap';
+import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
 import Head from 'next/head';
-
+gsap.registerPlugin(ScrollTrigger);
 import {HomePage} from './home';
 
 export default function Home() {

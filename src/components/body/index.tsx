@@ -1,6 +1,7 @@
-import useDeviceDetector, {useWindowSize} from 'components/hook/detext';
-import gsap, {Sine, TweenLite, TweenMax} from 'gsap';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import useDeviceDetector from 'components/hook/detext';
+import {gsap} from 'gsap/dist/gsap';
+import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {
   BodyWrap,
@@ -26,14 +27,11 @@ import {
   TdInfo,
   TdInfoEnd,
   TitleCompOne,
-  Wave,
 } from './styles';
 
-export const BodyComponent: React.FC = () => {
+const BodyComponent: React.FC = () => {
   const [active, setActive] = useState(1);
   const {isSp} = useDeviceDetector();
-  const {scrollPosition} = useWindowSize();
-  const svgRef = useRef();
 
   const openLink = useCallback(() => {
     open('https://google.com.vn');
@@ -55,54 +53,43 @@ export const BodyComponent: React.FC = () => {
         };
   }, [isSp]);
 
-  const svg: any = svgRef.current;
-  const width = 800;
-
   useEffect(() => {
-    if (!gsap || !svg) return;
+    if (!gsap) return;
 
-    const waves = svg.querySelectorAll(`polyline`);
+    // For each images with class "animate-image" on page
 
-    (TweenLite as any).defaultEase = Sine.easeInOut;
-    TweenLite.set('g', {x: 2});
-
-    const amplitude = 200;
-    const frequency = 2;
-    const segments = 200;
-    const interval = width / segments;
-
-    for (let i = 0; i < segments; i++) {
-      const norm = i / (segments - 1);
-      waves.forEach((wave: any, index: number) => {
-        const point = wave.points.appendItem(svg.createSVGPoint());
-
-        point.y = i * interval;
-        point.x = amplitude / 2;
-
-        TweenMax.to(point, 2, {
-          x: Number(-point.x) + (index + 1) * 20,
-          y: Number(-point.y) + (index + 1) * 20,
-          repeat: -1,
-          yoyo: true,
-        }).progress(norm * frequency);
-      });
-    }
-    // gsap.to('g', {duration: 2.5, ease: 'power3.out', y: -500});
-  }, [svg]);
+    const img = gsap.timeline({paused: true});
+    img
+      .set('.wave', {transformOrigin: 'center center'})
+      .fromTo(
+        '.wave',
+        {opacity: 0, scale: 0.8, y: '+=100'},
+        {opacity: 1, scale: 1, y: 0, duration: 1, immediateRender: false},
+      );
+    const scrt = ScrollTrigger.create({
+      trigger: '.wave',
+      start: 'top top',
+      id: 'ScrollTrigger',
+      end: 'bottom bottom',
+      animation: img,
+      toggleActions: 'play none none reverse',
+      markers: false,
+    });
+  }, []);
 
   return (
     <BodyWrap>
       <ComponentOne>
         <ComponentLeft>
-          {/* <img src="/images/wave.svg" height={950} /> */}
-          <Wave ref={svgRef}>
+          <img className="wave" src="/images/wave.svg" height={950} />
+          {/* <Wave ref={svgRef}>
             <g>
               <line id="line" x1="0" x2="100%" />
               {[...Array(30)].map((_, index: number) => {
                 return <polyline className={`wave_${index}`} />;
               })}
             </g>
-          </Wave>
+          </Wave> */}
         </ComponentLeft>
         <ComponentRight>
           <TitleCompOne>
