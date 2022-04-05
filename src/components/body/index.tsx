@@ -66,13 +66,13 @@ const BodyComponent: React.FC = () => {
         {opacity: 0, scale: 0.8, y: '+=100'},
         {opacity: 1, scale: 1, y: 0, duration: 1, immediateRender: false},
       );
-    const scrt = ScrollTrigger.create({
+    ScrollTrigger.create({
       trigger: '.wave',
       start: 'top top',
       id: 'ScrollTrigger',
       end: 'bottom bottom',
       animation: img,
-      toggleActions: 'play none none reverse',
+      toggleActions: 'restart reverse play reverse',
       markers: false,
     });
   }, []);

@@ -1,4 +1,4 @@
-import {useEffect, useLayoutEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 
 export const useWindowSize = () => {
   const [size, setSize] = useState([0, 0]);
@@ -8,7 +8,7 @@ export const useWindowSize = () => {
     setScrollPosition(position);
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll, {passive: true});
 
     function updateSize() {
