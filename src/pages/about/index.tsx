@@ -116,7 +116,6 @@ export const CustomComponent: React.FC = () => {
       throw new Error(error);
     }
   };
-  console.log('positin', position);
 
   const onTouchEnd = (event: any) => {
     try {
@@ -129,6 +128,13 @@ export const CustomComponent: React.FC = () => {
       );
 
       const box = document.getElementById(`${currentId_X}_${currentId_Y}`);
+
+      if (!box) {
+        event.target.style.top = position.x * 40 + 50 + 'px';
+        event.target.style.left = position.y * 40 + 50 + 'px';
+
+        return;
+      }
 
       event.target.innerHTML = box.innerHTML;
       box.innerHTML = position.val.toString();
@@ -151,8 +157,8 @@ export const CustomComponent: React.FC = () => {
       // const box = document.getElementById(`test`);
 
       // assign box new coordinates based on the touch.
-      box.style.left = touchLocation.pageX + 'px';
-      box.style.top = touchLocation.pageY + 'px';
+      box.style.left = touchLocation.pageX - 20 + 'px';
+      box.style.top = touchLocation.pageY - 20 + 'px';
     } catch (error) {
       throw new Error(error);
     }
@@ -172,46 +178,37 @@ export const CustomComponent: React.FC = () => {
       <br />
       <br />
       <br />
-      {isShow && (
-        <table>
-          <tbody>
-            {[...Array(Number(val.current))].map((_, i: number) => {
-              return (
-                <tr key={`first${i}`}>
-                  {[...Array(Number(val.current))].map((_, j: number) => {
-                    return (
-                      <td
-                        style={{
-                          border: '1px solid',
-                          padding: '10px',
-                          textAlign: 'center',
-                          cursor: 'pointer',
-                          position: 'absolute',
-                          top: i * 40 + 50 + 'px',
-                          left: j * 40 + 50 + 'px',
-                          height: '40px',
-                          width: '40px',
-                        }}
-                        key={`second${j}`}
-                        id={`${i}_${j}`}
-                        draggable={true}
-                        onDragStart={handleOnDrag}
-                        onDrop={handleOnDrop}
-                        onDragOver={allowDrop}
-                        onTouchStart={onTouchStart}
-                        onTouchMove={onTouchMove}
-                        onTouchEnd={onTouchEnd}
-                      >
-                        {arrTable[Number(i)][Number(j)]}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      )}
+      {isShow &&
+        [...Array(Number(val.current))].map((_, i: number) => {
+          return [...Array(Number(val.current))].map((_, j: number) => {
+            return (
+              <div
+                style={{
+                  border: '1px solid',
+                  padding: '10px',
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                  position: 'absolute',
+                  top: i * 40 + 50 + 'px',
+                  left: j * 40 + 50 + 'px',
+                  height: '40px',
+                  width: '40px',
+                }}
+                key={`second${j}`}
+                id={`${i}_${j}`}
+                draggable={true}
+                onDragStart={handleOnDrag}
+                onDrop={handleOnDrop}
+                onDragOver={allowDrop}
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+              >
+                {arrTable[Number(i)][Number(j)]}
+              </div>
+            );
+          });
+        })}
     </>
   );
 };
