@@ -145,6 +145,8 @@ export const CustomComponent: React.FC = () => {
         //   </tbody>
         // </table>
       }
+      <td draggable={true}>12312323</td>
+      <span draggable={true}>12312323</span>
     </>
   );
 };
