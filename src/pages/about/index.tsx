@@ -134,6 +134,8 @@ export const CustomComponent: React.FC = () => {
                       onDragStart={handleOnDrag}
                       onDrop={handleOnDrop}
                       onDragOver={allowDrop}
+                      onTouchStart={handleOnDrag}
+                      onTouchEnd={handleOnDrop}
                     >
                       {arrTable[Number(i)][Number(j)]}
                     </td>
