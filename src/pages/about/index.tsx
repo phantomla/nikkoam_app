@@ -113,37 +113,38 @@ export const CustomComponent: React.FC = () => {
       <br />
       <br />
       <br />
-      {isShow && (
-        <table>
-          <tbody>
-            {[...Array(Number(val.current))].map((_, i: number) => {
-              return (
-                <tr key={`first${i}`}>
-                  {[...Array(Number(val.current))].map((_, j: number) => {
-                    return (
-                      <td
-                        style={{
-                          border: '1px solid',
-                          padding: '10px',
-                          textAlign: 'center',
-                        }}
-                        key={`second${j}`}
-                        id={`${i}_${j}`}
-                        draggable={true}
-                        onDragStart={handleOnDrag}
-                        onDrop={handleOnDrop}
-                        onDragOver={allowDrop}
-                      >
-                        {arrTable[Number(i)][Number(j)]}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      )}
+      {
+        isShow &&
+          // <table>
+          //   <tbody>
+          [...Array(Number(val.current))].map((_, i: number) => {
+            return (
+              <tr key={`first${i}`}>
+                {[...Array(Number(val.current))].map((_, j: number) => {
+                  return (
+                    <td
+                      style={{
+                        border: '1px solid',
+                        padding: '10px',
+                        textAlign: 'center',
+                      }}
+                      key={`second${j}`}
+                      id={`${i}_${j}`}
+                      draggable={true}
+                      onDragStart={handleOnDrag}
+                      onDrop={handleOnDrop}
+                      onDragOver={allowDrop}
+                    >
+                      {arrTable[Number(i)][Number(j)]}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })
+        //   </tbody>
+        // </table>
+      }
     </>
   );
 };
