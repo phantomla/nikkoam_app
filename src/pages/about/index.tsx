@@ -136,8 +136,14 @@ export const CustomComponent: React.FC = () => {
         return;
       }
 
-      event.target.innerHTML = box.innerHTML;
-      box.innerHTML = position.val.toString();
+      const tempArr = [...arrTable];
+
+      tempArr[position.x][position.y] = Number(box.innerHTML);
+      tempArr[currentId_X][currentId_Y] = position.val;
+      setArrTable(tempArr);
+
+      // event.target.innerHTML = box.innerHTML;
+      // box.innerHTML = position.val.toString();
 
       box.style.top = currentId_X * 40 + 50 + 'px';
       box.style.left = currentId_Y * 40 + 50 + 'px';
