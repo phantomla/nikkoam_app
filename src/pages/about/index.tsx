@@ -91,7 +91,6 @@ export const CustomComponent: React.FC = () => {
 
   const onKeyDownEvent = (event: React.KeyboardEvent<HTMLInputElement>) => {
     try {
-      event.return;
       if (event.key === 'Enter') {
         onClickExe();
       }
