@@ -1,4 +1,3 @@
-import useDeviceDetector from 'components/hook/detext';
 import React, {useCallback, useRef, useState} from 'react';
 
 export const CustomComponent: React.FC = () => {
@@ -10,7 +9,6 @@ export const CustomComponent: React.FC = () => {
   });
   const [isShow, setIsShow] = useState<Boolean>(false);
   const [arrTable, setArrTable] = useState<number[][]>([]);
-  const {isSp} = useDeviceDetector();
 
   const onChangeInput = useCallback((e: any) => {
     try {
@@ -156,12 +154,7 @@ export const CustomComponent: React.FC = () => {
 
   const onTouchMove = (event: any) => {
     try {
-      let touchLocation;
-      if (isSp) {
-        touchLocation = event.targetTouches[0];
-      } else {
-        touchLocation = event;
-      }
+      const touchLocation = event.targetTouches[0];
 
       const box = document.getElementById(`${position.x}_${position.y}`);
       // const box = document.getElementById(`test`);
