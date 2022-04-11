@@ -1,3 +1,4 @@
+import useDeviceDetector from 'components/hook/detext';
 import React, {useCallback, useRef, useState} from 'react';
 
 export const CustomComponent: React.FC = () => {
@@ -9,6 +10,7 @@ export const CustomComponent: React.FC = () => {
   });
   const [isShow, setIsShow] = useState<Boolean>(false);
   const [arrTable, setArrTable] = useState<number[][]>([]);
+  const {isSp} = useDeviceDetector();
 
   const onChangeInput = useCallback((e: any) => {
     try {
@@ -41,7 +43,7 @@ export const CustomComponent: React.FC = () => {
 
   const handleOnDrag = React.useCallback((e: any) => {
     try {
-      console.log('event Start', e.target.innerHTML);
+      console.log('event Start', e);
 
       const id: string = e.target.id;
       const arr = id.split('_');
@@ -142,9 +144,6 @@ export const CustomComponent: React.FC = () => {
       tempArr[currentId_X][currentId_Y] = position.val;
       setArrTable(tempArr);
 
-      // event.target.innerHTML = box.innerHTML;
-      // box.innerHTML = position.val.toString();
-
       box.style.top = currentId_X * 40 + 50 + 'px';
       box.style.left = currentId_Y * 40 + 50 + 'px';
 
@@ -157,7 +156,12 @@ export const CustomComponent: React.FC = () => {
 
   const onTouchMove = (event: any) => {
     try {
-      const touchLocation = event.targetTouches[0];
+      let touchLocation;
+      if (isSp) {
+        touchLocation = event.targetTouches[0];
+      } else {
+        touchLocation = event;
+      }
 
       const box = document.getElementById(`${position.x}_${position.y}`);
       // const box = document.getElementById(`test`);
@@ -191,16 +195,17 @@ export const CustomComponent: React.FC = () => {
               <div
                 style={{
                   border: '1px solid',
-                  padding: '10px',
-                  textAlign: 'center',
                   cursor: 'pointer',
                   position: 'absolute',
                   top: i * 40 + 50 + 'px',
                   left: j * 40 + 50 + 'px',
                   height: '40px',
                   width: '40px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
-                key={`second${j}`}
+                key={`items${i}${j}`}
                 id={`${i}_${j}`}
                 draggable={true}
                 onDragStart={handleOnDrag}
